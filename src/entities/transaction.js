@@ -19,14 +19,16 @@ function isParametersValid(data){
 }
 
 export class Transaction {
+    id
     name
     category
     value
     constructor(data){
-        if (!isParametersValid(data)){
+        if (!isParametersValid(data) || !data){
             throw new Error("invalid parameters!")
         }
 
+        this.id = data.id ? data.id : crypto.randomUUID()
         this.name = data.name
         this.category = data.category
         this.value = data.value
