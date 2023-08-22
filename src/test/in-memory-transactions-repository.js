@@ -19,7 +19,6 @@ export class InMemoryTransactionsRepository
     transactions = []
 
     async create (transaction) {
-        console.log('Transactions: ',this.transactions)
         if (isIdDuplicated(this.transactions, transaction.id)){
             throw new Error('duplicated id!')
         }

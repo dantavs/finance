@@ -1,6 +1,10 @@
 import { createServer } from 'node:http'
+import { createTransactionService } from './services/create-transaction-service.js'
 
 async function handler(request, response){
+    if (request.url == "/createTransaction" && request.method == 'POST'){
+        return await createTransactionService(request, response)
+    }
     response.end("Hello world!")
 }
 

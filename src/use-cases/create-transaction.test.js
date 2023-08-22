@@ -1,6 +1,6 @@
 import { describe, it } from "node:test"
 import { fail, strictEqual } from 'node:assert'
-import { createTransaction } from "./create-transaction.js"
+import { CreateTransaction } from "./create-transaction.js"
 import { InMemoryTransactionsRepository } from "../test/in-memory-transactions-repository.js"
 
 describe('Create Transaction tests', () => {
@@ -13,7 +13,7 @@ describe('Create Transaction tests', () => {
             ,value: 3.2
         }
 
-        const transaction = new createTransaction(transactionRepository)
+        const transaction = new CreateTransaction(transactionRepository)
         await transaction.execute(data)
         
     })
@@ -23,7 +23,7 @@ describe('Create Transaction tests', () => {
         const data = {
             
         }
-        const transaction = new createTransaction(transactiosRepository)
+        const transaction = new CreateTransaction(transactiosRepository)
         try {
             await transaction.execute(data)
             fail('it should throw an error')
@@ -41,7 +41,7 @@ describe('Create Transaction tests', () => {
             ,value: 2
         }
 
-        const transaction = new createTransaction(transactionRepository)
+        const transaction = new CreateTransaction(transactionRepository)
         await transaction.execute(data)
 
         try {

@@ -1,6 +1,6 @@
 import { Transaction } from "../entities/transaction.js"
 
-export class createTransaction { 
+export class CreateTransaction { 
     transactionRepository
     constructor (transactionRepository){
         this.transactionRepository = transactionRepository
