@@ -5,7 +5,6 @@ import { once } from 'node:events'
 
 function transactionCreated(repository, data){
     const transation = new Transaction(data)
-    console.log(transation)
     const createTransaction = new CreateTransaction(repository)
     createTransaction.execute(transation)
 }
@@ -25,14 +24,11 @@ export async function createTransactionService(request, response){
         ,value: value
     }
 
-    console.date('Data:' ,data)
-    
     try {
         const x = transactionCreated(repository, data)
     } catch (error) {
         response.writeHead(400)
         response.end(JSON.stringify({ error: error.message}))
-        console.log('Error: ', error.message)
         return
     }
     

@@ -12,7 +12,7 @@ describe('Create Transaction Service Tests', () => {
     after(done => _server.close(done))
 
     it('should call the Create Transaction Use Case', async () => {
-        const data = {name: 'shop', category:'d', value: 1, testRunner: true}
+        const data = {name: 'shop', category:'debit', value: 1, testRunner: true}
         const request = await fetch(`${BASE_URL}/createTransaction`, {
             method: 'POST'
             ,body: JSON.stringify(data)
