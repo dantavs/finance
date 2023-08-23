@@ -25,4 +25,8 @@ export class InMemoryTransactionsRepository
 
         this.transactions.push(transaction)
     }
+
+    async list () {
+        return this.transactions
+    }
 }
