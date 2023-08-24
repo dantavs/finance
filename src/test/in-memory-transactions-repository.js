@@ -16,7 +16,10 @@ function isIdDuplicated(transactions, id){
 export class InMemoryTransactionsRepository
     extends TransactionsRepository {
     
-    transactions = []
+    transactions = [
+        {id: 1, name:'transaction 1', category: 'debit', value:1}
+        ,{id: 2, name:'transaction 2', category: 'debit', value: 2}
+    ]
 
     async create (transaction) {
         if (isIdDuplicated(this.transactions, transaction.id)){

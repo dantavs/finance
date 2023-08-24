@@ -1,14 +1,12 @@
+import { databaseSettings } from "../infra/database-settings.js"
 import { InMemoryTransactionsRepository } from "../test/in-memory-transactions-repository.js"
 import { ListTransactions } from "../use-cases/list-transactions.js"
 
 export async function listTransactionsService(request, response){
-    var transactionRepository = ''
+    const databaseSetting = new databaseSettings(request)
+    const repository = databaseSetting.database()
     
-    /* if (request.headers.testRunner){
-    } */
-    transactionRepository = new InMemoryTransactionsRepository()
-    
-    const listTransactions = new ListTransactions(transactionRepository)
+    const listTransactions = new ListTransactions(repository)
     const transactions = await listTransactions.execute()
 
     response.end(JSON.stringify(transactions))

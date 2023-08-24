@@ -1,5 +1,5 @@
 import { Transaction } from "../entities/transaction.js"
-import { InMemoryTransactionsRepository } from "../test/in-memory-transactions-repository.js"
+import { databaseSettings } from "../infra/database-settings.js"
 import { CreateTransaction } from "../use-cases/create-transaction.js"
 import { once } from 'node:events'
 
@@ -11,12 +11,10 @@ function transactionCreated(repository, data){
 
 export async function createTransactionService(request, response){
     
-    const { name, category, value, testRunner } = JSON.parse(await once(request, 'data'))
-    var repository
-    
-    if (testRunner){
-        repository = new InMemoryTransactionsRepository()
-    }
+    const databaseSetting = new databaseSettings(request)
+    const repository = databaseSetting.database()
+
+    const { name, category, value} = JSON.parse(await once(request, 'data'))
     
     const data = {
         name: name
