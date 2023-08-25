@@ -10,6 +10,11 @@ function isParametersValid(data){
         return false
     }
 
+    if (!data.date || isNaN(Date.parse(data.date))){
+
+        return false
+    }
+
   
     if (isNaN(data.value)){
         return false
@@ -23,6 +28,7 @@ export class Transaction {
     name
     category
     value
+    date
     constructor(data){
         if (!isParametersValid(data) || !data){
             throw new Error("invalid parameters!")
@@ -32,6 +38,7 @@ export class Transaction {
         this.name = data.name
         this.category = data.category
         this.value = data.value
+        this.date = new Date(data.date)
     }
 
 

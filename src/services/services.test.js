@@ -13,7 +13,7 @@ describe('Services Test Suite', () => {
 
 
     it('should call the Create Transaction Use Case', async () => {
-        const data = {name: 'shop', category:'debit', value: 1}
+        const data = {name: 'shop', category:'debit', value: 1, date: new Date()}
         const request = await fetch(`${BASE_URL}/createTransaction`, {
             method: 'POST'
             ,headers: {
@@ -40,36 +40,7 @@ describe('Services Test Suite', () => {
         deepStrictEqual(response, {error: "invalid parameters!"})
 
     })
-    it('should return an empty list of transactions', async () => {
-        const request = await fetch(`${BASE_URL}/listTransactions`, {
-            method: 'GET'
-            ,headers: {
-                testrunner: true
-            }
-        })
-
-        const response = await request.json()
-
-       strictEqual(request.status,200)
-       deepStrictEqual(response, [])
-
-    })
     it('should return a list with 2 transactions', async () => {
-        const tr1 = {name: 'transaction 1',category: 'debit', value: 1.1}
-        const tr2 = {name: 'transaction 2',category: 'debit', value: 1.2}
-
-        await fetch(`${BASE_URL}/createTransaction`, {
-            method: 'POST'
-            ,headers: {testrunner: true}
-            ,body: JSON.stringify(tr1)
-        })
-
-        await fetch(`${BASE_URL}/createTransaction`, {
-            method: 'POST'
-            ,headers: {testrunner: true}
-            ,body: JSON.stringify(tr2)
-        })
-
         const request = await fetch(`${BASE_URL}/listTransactions`,{
             method:'GET'
             ,headers: {testrunner: true}

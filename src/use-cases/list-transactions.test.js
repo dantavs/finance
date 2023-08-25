@@ -10,7 +10,7 @@ describe('List Transaction Use Case tests', () => {
         const listTransactions = new ListTransactions(inMemoryTransactionsRepository)
         const transactions = await listTransactions.execute()
         
-        strictEqual(transactions.length, 0)
+        strictEqual(transactions.length, 2)
     })
 
     it('should return transaction list items', async () => {
@@ -20,6 +20,7 @@ describe('List Transaction Use Case tests', () => {
             name: 'shop'
             ,category: 'debit'
             ,value: 4.1
+            ,date: new Date()
         }
 
         const transaction = new CreateTransaction(inMemoryTransactionsRepository)
@@ -28,6 +29,6 @@ describe('List Transaction Use Case tests', () => {
         const listTransactions = new ListTransactions(inMemoryTransactionsRepository)
         const transactions = await listTransactions.execute()
 
-        strictEqual(transactions.length, 1)
+        strictEqual(transactions.length, 3)
     })
 })

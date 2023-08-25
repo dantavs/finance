@@ -11,6 +11,7 @@ describe('Create Transaction tests', () => {
             name: 'shop'
             ,category: 'debit'
             ,value: 3.2
+            ,date: new Date()
         }
 
         const transaction = new CreateTransaction(transactionRepository)
@@ -39,6 +40,7 @@ describe('Create Transaction tests', () => {
             ,name: 'shop'
             ,category: 'debit'
             ,value: 2
+            ,date: new Date()
         }
 
         const transaction = new CreateTransaction(transactionRepository)

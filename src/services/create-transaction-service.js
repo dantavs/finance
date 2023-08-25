@@ -14,12 +14,13 @@ export async function createTransactionService(request, response){
     const databaseSetting = new databaseSettings(request)
     const repository = databaseSetting.database()
 
-    const { name, category, value} = JSON.parse(await once(request, 'data'))
+    const { name, category, value, date} = JSON.parse(await once(request, 'data'))
     
     const data = {
         name: name
         ,category: category
         ,value: value
+        ,date: date
     }
 
     try {
