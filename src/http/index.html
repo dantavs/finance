@@ -1,0 +1,148 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="modal" id="modal">
+            <div id="addTransactionModal">
+                <span class="close">&times;</span>
+                <h2>Add Transaction</h2>
+                <form id="addTransactionForm" onsubmit="javascript:insertTransaction(this)">
+                    <label for="fname">Transaction name:</label><br>
+                    <input type="text" id="fname" name="name" placeholder="John" required><br><br>
+                    <label for="lcategory">Category:</label><br>
+                    <select name="category" id="category">
+                        <option value="credit">Credit</option>
+                        <option value="debit">Debit</option>
+                      </select><br><br>
+                    <label for="lname">Value:</label><br>
+                    <input type="number" id="transactionValue" name="value" placeholder="Doe" required min="0.00" max="10000.00" step="0.01"  ><br><br>
+                    <label for="lname">Date:</label><br>
+                    <input type="date" id="lname" name="date" placeholder="Doe" required><br><br>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+        <h1>Finance</h1>
+        <button class="addButton" id="addButton">Add transaction</button>
+        <div id="transactionsList"></div>
+        <script>
+
+            async function listTransactions(){
+                var request = await fetch("http://localhost:3000/listTransactions",{method:'GET'})
+                transactionsList = await request.json()
+                return transactionsList
+            }
+            
+            async function updatePage(){
+                const transactionsList = await listTransactions()
+    
+                let transactionHeader = "<div class='trasactionContainerHead'>"
+                transactionHeader += "<div class='trh'><label class='transactionHeaderField'>Name</label></div>"
+                transactionHeader += "<div class='trh'><label class='transactionHeaderField'>Category</label></div>"
+                transactionHeader += "<div class='trh'><label class='transactionHeaderField'>Value</label></div>"
+                transactionHeader += "<div class='trh'><label class='transactionHeaderField'>Date</label></div>"
+                transactionHeader += "</div>"
+                document.getElementById("transactionsList").innerHTML += transactionHeader;
+                
+                let EUR = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'EUR'})   
+          
+                    
+                for(let i = 0;i<transactionsList.length;i++){
+                    let date1 = new Date(transactionsList[i].date)
+                    let date = `${date1.getDate()}/${date1.getMonth()}/${date1.getFullYear()}`
+
+                    let valueClasse = transactionsList[i].category
+
+                    let container = `<div class="trasactionContainer">`;
+                    container += `<label class="transactionItem">${transactionsList[i].name}</label>`;
+                    container += `<label class="transactionItem">${transactionsList[i].category}</label>`;
+                    container += `<label class="transactionItem ${valueClasse}">${EUR.format(transactionsList[i].value)}</label>`;
+                    container += `<label class="transactionItem">${date}</label>`;
+                    container += `</div>`;
+                    document.getElementById("transactionsList").innerHTML += container;
+                }
+            }
+
+            updatePage()
+
+            var modal = document.getElementById("modal");
+            var addButton = document.getElementById("addButton")
+            var span = document.getElementsByClassName("close")[0];
+
+            addButton.onclick = function () {
+                modal.style.display = "block"
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+
+            }}
+
+            span.onclick = function () {
+                modal.style.display = "none"
+            }
+
+            async function callTransactionAPI(transaction){
+                const request = await fetch("http://localhost:3000/createTransaction",{
+                    method: 'POST'
+                    ,body: JSON.stringify(transaction)
+                })
+                return request
+            }
+
+            function validateTransactionData(transaction){
+                if (!transaction.name ||
+                    !transaction.category ||
+                    !transaction.value ||
+                    !transaction.date){
+                        alert('Invalid Parameters!')
+                        return false
+                }
+                return true
+            }
+
+            async function insertTransaction (formData) {
+                const form = document.getElementById("addTransactionForm")
+                var data = new FormData(document.getElementById("addTransactionForm"));
+
+                const transaction = {
+                    name: data.get("name")
+                    ,category: data.get("category")
+                    ,value: parseInt(data.get("value"))
+                    ,date: new Date(data.get("date"))
+                }
+
+                if (!validateTransactionData(transaction)){
+                    return false
+                }
+
+                let request
+                let response
+
+                try {
+                    request = await callTransactionAPI(transaction)
+                    response = await request.json()
+                } catch (error) {
+                    alert(`Error: ${error.message}`)
+                    return false
+                }
+
+                if (request?.ok){
+                    form.reset()
+                    document.getElementById("modal").style.display = "none"
+                    return false
+                }else{
+                    alert(response.error)
+                } 
+
+                return false
+            }
+
+        </script>
+    </body>
+</html>

@@ -5,7 +5,6 @@ export class PrismaTransactionsRepository
 extends TransactionsRepository{
     
     async create(transaction){
-        console.log('Transaction: ', transaction)
         await prisma.transactions.create({
             data: transaction
         })

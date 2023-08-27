@@ -1,5 +1,5 @@
+import { headers } from "../index.js"
 import { databaseSettings } from "../infra/database-settings.js"
-import { InMemoryTransactionsRepository } from "../test/in-memory-transactions-repository.js"
 import { ListTransactions } from "../use-cases/list-transactions.js"
 
 export async function listTransactionsService(request, response){
@@ -9,5 +9,6 @@ export async function listTransactionsService(request, response){
     const listTransactions = new ListTransactions(repository)
     const transactions = await listTransactions.execute()
 
+    response.writeHead(200, headers)
     response.end(JSON.stringify(transactions))
 }

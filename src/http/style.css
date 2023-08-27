@@ -1,0 +1,93 @@
+.trasactionContainerHead{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 700px;
+    height: 30px;
+}
+
+.trh{
+    width: 150px;
+    height: 30px;
+    background-color: white;
+
+}
+
+.transactionHeaderField{
+    color: darkblue;
+    font-weight: bold;
+    text-align: left;
+}
+
+.transactionItem{
+    width: 150px;
+}
+
+.trasactionContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 700px;
+    border-bottom: 0.1rem solid lightgrey;
+}
+
+#transactionsList{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.addButton{
+    margin-left: 550px;
+    width: 150px;
+    height: 30px;
+}
+
+.addButton:hover{
+    background-color: rgb(162, 180, 225);
+    color: white;
+}
+
+.modal{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+#addTransactionModal{
+    background-color: white;
+    width: 500px;
+    height: 500px;
+    margin-top: 60px;
+    margin-left: 100px;
+    padding-top: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .credit{
+    color: green;
+  }
+
