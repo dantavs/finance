@@ -4,6 +4,7 @@
     justify-content: space-between;
     width: 700px;
     height: 30px;
+    border-bottom: 0.2rem solid black;
 }
 
 .trh{
@@ -17,10 +18,15 @@
     color: darkblue;
     font-weight: bold;
     text-align: left;
+    font-size: 18px;
 }
 
 .transactionItem{
     width: 150px;
+}
+
+.hidden{
+    display: none;
 }
 
 .trasactionContainer{
@@ -38,14 +44,33 @@
     margin-top: 30px;
 }
 
+.button{
+    width: 150px;
+    height: 30px;    
+}
+
 .addButton{
     margin-left: 550px;
     width: 150px;
     height: 30px;
 }
 
-.addButton:hover{
-    background-color: rgb(162, 180, 225);
+.formButton{
+    width: 200px;
+    height: 30px;
+}
+
+.reset{
+    margin-top: 5px;
+}
+
+.reset:hover{
+    background-color: rgba(239, 209, 110, 0.972);
+    color: white;
+}
+
+.button:hover{
+    background-color: darkblue;
     color: white;
 }
 
@@ -63,13 +88,13 @@
 
 #addTransactionModal{
     background-color: white;
-    width: 500px;
-    height: 500px;
+    height: 450px;
+    width: 240px;
     margin-top: 60px;
     margin-left: 100px;
-    padding-top: 10px;
+    padding-top: 5px;
     padding-left: 50px;
-    padding-right: 50px;
+    padding-right: 10px;
 }
 
 /* The Close Button */
@@ -91,3 +116,12 @@
     color: green;
   }
 
+.formLabel{
+    font-weight:600;
+}
+
+.formInput{
+    font-size: 16px;
+    width: 200px;
+    height: 30px;
+}
