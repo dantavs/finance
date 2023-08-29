@@ -5,14 +5,17 @@ import { CreateTransaction } from "../use-cases/create-transaction.js"
 import { once } from 'node:events'
 
 async function transactionCreated(repository, data){
-    const transation = new Transaction(data)
+    const transaction = new Transaction(data)
     const createTransaction = new CreateTransaction(repository)
-    await createTransaction.execute(transation)
+    await createTransaction.execute(transaction)
+
+    return transaction
 }
 
 export async function createTransactionService(request, response){
     const databaseSetting = new databaseSettings(request)
     const repository = databaseSetting.database()
+    let transaction = ""
 
     const { name, category, value, date} = JSON.parse(await once(request, 'data'))
     
@@ -24,15 +27,14 @@ export async function createTransactionService(request, response){
     }
 
     try {
-        await transactionCreated(repository, data)
+        transaction = await transactionCreated(repository, data)
     } catch (error) {
         response.writeHead(400, headers)
         response.end(JSON.stringify({ error: error.message}))
         return
     }
 
-    
     response.writeHead(200, headers)
-    response.end(JSON.stringify({message: "Created Transaction"}))
+    response.end(JSON.stringify(transaction))
 }
 

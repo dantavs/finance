@@ -1,25 +1,34 @@
 import { createServer } from 'node:http'
+import { PrismaClient } from '@prisma/client'
 import { createTransactionService } from './services/create-transaction-service.js'
 import { listTransactionsService } from './services/list-transactions-service.js'
-import { PrismaClient } from '@prisma/client'
-
+import { deleteTransactionService } from './services/delete-transaction-service.js'
 
 async function handler(request, response){
-    
-    if (request.url == "/createTransaction" && request.method == 'POST'){
+
+    const url = new URL(request.url, "http://localhost:3000")
+    const path = url.pathname
+
+    if (path == "/createTransaction" && request.method == 'POST'){
         return await createTransactionService(request, response)
     }
-    if (request.url == "/listTransactions"){
+    if (path == "/listTransactions"){
         return await listTransactionsService(request, response)
     }
-    response.end("Hello world!")
+
+    if (path == "/deleteTransaction/" && request.method == 'DELETE'){
+        return await deleteTransactionService(request, response)
+    }
+
+    response.writeHead(404, headers)
+    response.end("Path doesn't exist!")
 }
 
 export const prisma = new PrismaClient()
 
 const headers = {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "POST, GET",
+    "Access-Control-Allow-Methods": "POST, GET, DELETE",
     "Access-Control-Max-Age": 2592000, // 30 days
     /** add other headers as per requirement */
   };

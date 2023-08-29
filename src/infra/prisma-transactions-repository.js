@@ -13,4 +13,12 @@ extends TransactionsRepository{
     async list(){
         return prisma.transactions.findMany()
     }
+
+    async delete(id){
+        await prisma.transactions.delete({
+            where: {
+                id: id
+            }
+        })
+    }
 }

@@ -11,7 +11,7 @@ describe('Services Test Suite', () => {
     })
     after( done =>  _server.close(done))
 
-
+    var _globalID = ""
     it('should call the Create Transaction Use Case', async () => {
         const data = {name: 'shop', category:'debit', value: 1, date: new Date()}
         const request = await fetch(`${BASE_URL}/createTransaction`, {
@@ -21,6 +21,10 @@ describe('Services Test Suite', () => {
             }
             ,body: JSON.stringify(data)
         })
+
+        const response = await request.json()
+
+        _globalID = response.id
 
         strictEqual(request.status, 200)
     })
@@ -50,5 +54,33 @@ describe('Services Test Suite', () => {
 
         strictEqual(request.status, 200)
         deepStrictEqual(response.length, 2)
+    })
+    it('should throw error when  try Delete a Transaction with the id is not found', async () => {
+        const id = crypto.randomUUID()
+
+        const request = await fetch(`${BASE_URL}/deleteTransaction/?id=${id}`, {
+            method: 'DELETE'
+            ,headers: {
+                testrunner: true
+            }
+        })
+
+        const response = await request.json()
+
+        strictEqual(request.status, 400)
+        deepStrictEqual(response, {error: "id not found!"})
+    })
+    it('should delete a transaction if a valid id is informed', async () => {
+
+        console.log("ID delete test: ", _globalID)
+
+        const request = await fetch(`${BASE_URL}/deleteTransaction/?id=1`, {
+            method: 'DELETE'
+            ,headers: {
+                testrunner: true
+            }
+        })
+
+        strictEqual(request.status, 201)
     })
 })
